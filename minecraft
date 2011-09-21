@@ -165,6 +165,12 @@ mc_whole_backup() {
 	path=`datepath $WHOLEBACKUP/mine_`
 	as_user "cp -rP $MCPATH $path"
 }
+mc_whole_backup_tarball() {
+    echo "Doing a complete server backup, as a tarball!"
+	as_user "mkdir -p $WHOLEBACKUP"
+	path=`datepath $WHOLEBACKUP/mine_.tar`
+	as_user "tar -cf $path $MCPATH"
+}
 mc_world_backup() {
 	get_worlds
 	for INDEX in ${!WORLDNAME[@]}
@@ -363,12 +369,26 @@ case "$1" in
 		# Backup everything
 		mc_whole_backup
 		;;
+	whole-backup-tar)
+		# Backup everything
+		mc_whole_backup_tarball
+		;;
 	update)
 		#update minecraft_server.jar and craftbukkit.jar (thanks karrth)
 		as_user "screen -p 0 -S $SCREEN -X eval 'stuff \"say SERVER UPDATE IN 10 SECONDS.\"\015'"
 		mc_stop
 		to_disk
 		mc_whole_backup
+		mc_update
+		check_links
+		mc_start
+		;;
+	fastupdate)
+		#update minecraft_server.jar and craftbukkit.jar (thanks karrth)
+		as_user "screen -p 0 -S $SCREEN -X eval 'stuff \"say SERVER UPDATE IN 10 SECONDS.\"\015'"
+		mc_stop
+		to_disk
+		#mc_whole_backup
 		mc_update
 		check_links
 		mc_start
@@ -448,7 +468,9 @@ case "$1" in
 		echo "restart - restarts the server"
 		echo "backup - backups the worlds defined in the script"
 		echo "whole-backup - backups the entire server folder"
-		echo "update - fetches the latest version of minecraft.jar server and Bukkit"
+		echo "whole-backup-tarball - backups the entire server folder as an uncompressed tarball"
+		echo "update - fetches the latest server build of minecraft.jar or Bukkit"
+        echo "fastupdate - fetches the latest server build of minecraft.jar or Bukkit without performing an automatic full backup"
 		echo "log-roll - Moves and gzips the logfile"
 		echo "to-disk - copies the worlds from the ramdisk to worldstorage"
 		echo "connected - lists connected users"
