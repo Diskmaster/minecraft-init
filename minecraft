@@ -358,7 +358,7 @@ case "$1" in
 		;;
 	backup)
 		# Backups world
-		as_user "screen -p 0 -S $SCREEN -X eval 'stuff \"say Backing up world.\"\015'"
+		as_user "screen -p 0 -S $SCREEN -X eval 'stuff \"say Backing up universe.\"\015'"
 		mc_saveoff
 		to_disk
 		mc_world_backup
@@ -375,7 +375,7 @@ case "$1" in
 		;;
 	update)
 		#update minecraft_server.jar and craftbukkit.jar (thanks karrth)
-		as_user "screen -p 0 -S $SCREEN -X eval 'stuff \"say SERVER UPDATE IN 10 SECONDS.\"\015'"
+		as_user "screen -p 0 -S $SCREEN -X eval 'stuff \"say SERVER BACKUP AND UPDATE IN 10 SECONDS.\"\015'"
 		mc_stop
 		to_disk
 		mc_whole_backup
@@ -385,7 +385,7 @@ case "$1" in
 		;;
 	fastupdate)
 		#update minecraft_server.jar and craftbukkit.jar (thanks karrth)
-		as_user "screen -p 0 -S $SCREEN -X eval 'stuff \"say SERVER UPDATE IN 10 SECONDS.\"\015'"
+		as_user "screen -p 0 -S $SCREEN -X eval 'stuff \"say QUICK SERVER UPDATE IN 10 SECONDS.\"\015'"
 		mc_stop
 		to_disk
 		#mc_whole_backup
