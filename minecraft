@@ -160,6 +160,7 @@ get_worlds() {
 	done
 }
 mc_whole_backup() {
+    echo "Doing a complete server backup!"
 	as_user "mkdir -p $WHOLEBACKUP"
 	path=`datepath $WHOLEBACKUP/mine_`
 	as_user "cp -rP $MCPATH $path"
@@ -293,7 +294,7 @@ mc_update() {
                     if `diff $MCPATH/craftbukkit-0.0.1-SNAPSHOT.jar $MCPATH/craftbukkit.jar.manualupdate > /dev/null`
                     then
                         echo "No point in updating, updated build matches currently running build."
-                        #as_user "rm $MCPATH/craftbukkit.jar.manualupdate"
+                        as_user "rm $MCPATH/craftbukkit.jar.manualupdate"
                     else
                         as_user "mv $MCPATH/craftbukkit.jar.manualupdate $MCPATH/craftbukkit-0.0.1-SNAPSHOT.jar"
                         echo "Manual update completed."
